@@ -6,27 +6,36 @@ from random import randint
 # Módulo click para argumentos
 from click import argument as c_argument
 from click import command as c_command
+from click import option as c_option
 
 # Criação de um set
 s = set()
 
+# Textos de ajuda para os parâmetros
+h_numeros = 'Quantidade de números apostados (padrão 6)'
+h_apostas = 'Quantidade de apostas (padrão 1)'
+h_cartela = 'Quantidade de números na cartela (padrão 60)'
 
-@c_command
-@c_argument(
-def apostar(qtd_num_apostados:int=6, apostas:int=1, qtd_num:int=60) -> None:
+
+# Configuração dos parâmetros do script
+@c_command()
+@c_option('--numeros', '-n', type=int, default=6, help=h_numeros)
+@c_option('--apostas', '-a', type=int, default=1, help=h_apostas)
+@c_option('--cartela', '-c', type=int, default=60, help=h_cartela)
+def apostar(numeros: int = 6, apostas: int = 1, cartela: int = 60) -> None:
     # Criação de um set
     s = set()
 
     # Quantoss dígitos a quantidade de número tem
-    digitos = len(str(qtd_num))
+    digitos = len(str(cartela))
 
     for i in range(apostas):
-        # Enquanto o tamanho de s for menor que 6
-        while (len(s) < qtd_num_apostados):
+        # Enquanto o tamanho de s for menor que numeros
+        while (len(s) < numeros):
             # Adicionar um número aleatório de 1 a quantidade de números
             # possíveis para se apostar
             n = str(
-                    randint(1, qtd_num)
+                    randint(1, cartela)
                    ).zfill(digitos)
 
             s.add(n)
@@ -36,10 +45,14 @@ def apostar(qtd_num_apostados:int=6, apostas:int=1, qtd_num:int=60) -> None:
         s = s.replace(']', '')
         s = s.replace("'", '')
         print(s)
+        s = set()
 
+
+# Definição da função main
 def main() -> None:
-    pass
+    apostar()
 
+
+# Execução
 if __name__ == '__main__':
     main()
-
