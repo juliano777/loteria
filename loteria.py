@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# _*_ coding: utf8 _*_
 
 # importando o método randint do módulo random
 from random import randint
